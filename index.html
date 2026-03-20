@@ -11,11 +11,9 @@ body {
     margin: 0;
     padding: 20px;
 }
-
 h1 {
     text-align: center;
 }
-
 #buscador {
     width: 100%;
     max-width: 500px;
@@ -39,7 +37,6 @@ h1 {
     text-align: center;
     margin-bottom: 20px;
 }
-
 .letra {
     display: inline-block;
     margin: 3px;
@@ -48,7 +45,6 @@ h1 {
     border-radius: 5px;
     cursor: pointer;
 }
-
 .activa {
     background: #007bff;
     color: white;
@@ -58,7 +54,6 @@ h1 {
 .contenedor {
     flex: 3;
 }
-
 .item {
     display: flex;
     gap: 15px;
@@ -69,25 +64,21 @@ h1 {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     align-items: center;
 }
-
 .item img {
     width: 100px;
     height: 120px;
     object-fit: cover;
     border-radius: 8px;
 }
-
 .contenido {
     flex: 1;
 }
-
 .tipo {
     font-size: 12px;
     color: white;
     padding: 3px 8px;
     border-radius: 5px;
 }
-
 .libro { background: #007bff; }
 .revista { background: #28a745; }
 .articulo { background: #ffc107; color: black; }
@@ -97,33 +88,29 @@ h1 {
 .sidebar {
     flex: 1;
 }
-
 .nuevos {
     background: white;
     padding: 15px;
     border-radius: 10px;
     border: 2px solid #007bff;
 }
-
 .nuevos h3 {
     margin-top: 0;
     text-align: center;
 }
-
 .nuevo-item {
     font-size: 14px;
     margin: 8px 0;
     border-bottom: 1px solid #eee;
     padding-bottom: 5px;
 }
-
 .numero {
     font-weight: bold;
     color: #007bff;
 }
-
 </style>
 </head>
+
 <body>
 
 <h1>Buscador Bibliográfico</h1>
@@ -148,17 +135,18 @@ h1 {
 </div>
 
 <script>
+
 const datos = [
-    {tipo: "libro", titulo: "Historia de Chiapas", autor: "Juan Pérez", imagen: "imagenes/libro1.jpg"},
-    {tipo: "revista", titulo: "Cultura y Sociedad", autor: "María López", imagen: "imagenes/revista1.jpg"},
-    {tipo: "articulo", titulo: "Turismo en San Cristóbal", autor: "Carlos Ruiz", imagen: "imagenes/articulo1.jpg"},
-    {tipo: "folleto", titulo: "Guía turística Chiapas", autor: "Gobierno de México", imagen: "imagenes/folleto1.jpg"},
-    {tipo: "libro", titulo: "Ecosistemas de Chiapas", autor: "Ana Gómez", imagen: "imagenes/libro2.jpg"},
-    {tipo: "articulo", titulo: "Economía regional", autor: "Luis Hernández", imagen: "imagenes/articulo2.jpg"},
-    {tipo: "libro", titulo: "Biodiversidad en Chiapas", autor: "Laura Méndez", imagen: "imagenes/libro3.jpg"},
-    {tipo: "revista", titulo: "Investigación Ambiental", autor: "UNAM", imagen: "imagenes/revista2.jpg"},
-    {tipo: "articulo", titulo: "Cambio climático en México", autor: "Pedro Torres", imagen: "imagenes/articulo3.jpg"},
-    {tipo: "libro", titulo: "Zoología de México", autor: "Dr. Rivera", imagen: "imagenes/libro4.jpg"}
+    {tipo: "libro", titulo: "Historia de Chiapas", autor: "Juan Pérez", imagen: "https://historico.conaliteg.gob.mx/c/H1993P3HI161/000.jpg", descripcion: "Un recorrido histórico por el estado de Chiapas."},
+    {tipo: "revista", titulo: "Cultura y Sociedad", autor: "María López", imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEndY1fBwami2CuFtKcRZyz8T1uTxDVD7K3w&s"},
+    {tipo: "articulo", titulo: "Turismo en San Cristóbal", autor: "Carlos Ruiz", imagen: "https://0.academia-photos.com/attachment_thumbnails/125750250/mini_magick20251216-1-tdzecp.png?1765847358", descripcion: "Análisis del turismo en San Cristóbal de las Casas."},
+    {tipo: "folleto", titulo: "Guía turística Chiapas", autor: "Gobierno de México", imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTz-Bv4kZczLDUd4spB7zvu2EdkO2AZuSEbcw&s"},
+    {tipo: "libro", titulo: "Ecosistemas de Chiapas", autor: "Ana Gómez", imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTVoGY2XRDYkCFBEwh-1e5bPYmUwwDMZG8Qw&s", descripcion: "Descripción de los ecosistemas presentes en Chiapas."},
+    {tipo: "articulo", titulo: "Economía regional", autor: "Luis Hernández", imagen: "https://www.comecso.com/wp-content/uploads/2024/05/portada-133-810x1121.jpg"},
+    {tipo: "libro", titulo: "Biodiversidad en Chiapas", autor: "Laura Méndez", imagen: "https://i1.rgstatic.net/publication/264544109_La_Biodiversidad_en_Chiapas_Estudio_de_Estado_Volumen_1/links/53e3e2610cf2fb74870e23e9/largepreview.png", descripcion: "Estudio sobre la biodiversidad del estado."},
+    {tipo: "revista", titulo: "Investigación Ambiental", autor: "UNAM", imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWJaWlTSv4lPXtsZFb00OMiCewZ2w_IeBjfw&s"},
+    {tipo: "articulo", titulo: "Cambio climático en México", autor: "Pedro Torres", imagen: "https://i1.rgstatic.net/publication/337972712_El_cambio_climatico/links/5df891ba299bf10bc361366f/largepreview.png"},
+    {tipo: "libro", titulo: "Zoología de México", autor: "Dr. Rivera", imagen: "https://m.media-amazon.com/images/I/51A4SVe1jXL._AC_UF1000,1000_QL80_.jpg"}
 ];
 
 const lista = document.getElementById("lista");
@@ -173,13 +161,11 @@ let letraSeleccionada = "TODOS";
     const span = document.createElement("span");
     span.textContent = letra;
     span.classList.add("letra");
-
     span.onclick = () => {
         letraSeleccionada = letra;
         actualizarActiva(span);
         mostrarDatos(buscador.value);
     };
-
     abecedarioDiv.appendChild(span);
 });
 
@@ -187,13 +173,11 @@ let letraSeleccionada = "TODOS";
 const todosBtn = document.createElement("span");
 todosBtn.textContent = "TODOS";
 todosBtn.classList.add("letra", "activa");
-
 todosBtn.onclick = () => {
     letraSeleccionada = "TODOS";
     actualizarActiva(todosBtn);
     mostrarDatos(buscador.value);
 };
-
 abecedarioDiv.appendChild(todosBtn);
 
 function actualizarActiva(el) {
@@ -222,14 +206,12 @@ function mostrarDatos(filtro="") {
     const f = normalizar(filtro);
 
     let resultado = datos.filter(item => {
-        const coincide =
-            normalizar(item.titulo).includes(f) ||
-            normalizar(item.autor).includes(f) ||
-            normalizar(item.tipo).includes(f);
+        const coincide = normalizar(item.titulo).includes(f) ||
+                         normalizar(item.autor).includes(f) ||
+                         normalizar(item.tipo).includes(f);
 
-        const coincideLetra =
-            letraSeleccionada === "TODOS" ||
-            normalizar(item.titulo).startsWith(normalizar(letraSeleccionada));
+        const coincideLetra = letraSeleccionada === "TODOS" ||
+                              normalizar(item.titulo).startsWith(normalizar(letraSeleccionada));
 
         return coincide && coincideLetra;
     });
@@ -237,6 +219,7 @@ function mostrarDatos(filtro="") {
     resultado = ordenarDatos(resultado);
 
     const limite = (letraSeleccionada === "TODOS") ? 10 : 6;
+
     resultado.slice(0, limite).forEach(item => {
         const div = document.createElement("div");
         div.classList.add("item");
@@ -247,13 +230,15 @@ function mostrarDatos(filtro="") {
                 <span class="tipo ${item.tipo}">${item.tipo}</span>
                 <h3>${item.titulo}</h3>
                 <p>${item.autor}</p>
+                ${item.descripcion ? `<p>${item.descripcion}</p>` : ""}
             </div>
         `;
+
         lista.appendChild(div);
     });
 }
 
-// 🆕 Mostrar nuevos (últimos 10)
+// 🆕 Mostrar nuevos
 function mostrarNuevos() {
     nuevosLista.innerHTML = "";
 
@@ -264,8 +249,7 @@ function mostrarNuevos() {
         div.classList.add("nuevo-item");
 
         div.innerHTML = `
-            <span class="numero">${index + 1}.</span>
-            ${item.titulo}
+            <span class="numero">${index + 1}.</span> ${item.titulo}
         `;
 
         nuevosLista.appendChild(div);
@@ -278,6 +262,7 @@ buscador.onkeyup = e => mostrarDatos(e.target.value);
 // inicial
 mostrarDatos();
 mostrarNuevos();
+
 </script>
 
 </body>
