@@ -62,7 +62,7 @@ h1 {
     padding: 15px;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    align-items: center;
+    align-items: flex-start;
 }
 .item img {
     width: 100px;
@@ -78,11 +78,42 @@ h1 {
     color: white;
     padding: 3px 8px;
     border-radius: 5px;
+    display: inline-block;
 }
 .libro { background: #007bff; }
 .revista { background: #28a745; }
 .articulo { background: #ffc107; color: black; }
 .folleto { background: #dc3545; }
+
+/* 📝 Descripción recortada */
+.descripcion {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.4;
+    margin-top: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.descripcion.expandida {
+    -webkit-line-clamp: unset;
+    overflow: visible;
+}
+.ver-mas {
+    background: none;
+    border: none;
+    color: #007bff;
+    cursor: pointer;
+    font-size: 12px;
+    margin-top: 5px;
+    padding: 0;
+    text-decoration: underline;
+}
+.ver-mas:hover {
+    color: #0056b3;
+}
 
 /* 🆕 Sidebar */
 .sidebar {
@@ -135,6 +166,33 @@ h1 {
     cursor: pointer;
     float: right;
 }
+
+/* 📊 Contador y Copyright */
+.footer-info {
+    text-align: center;
+    margin-top: 30px;
+    padding: 15px;
+    border-top: 1px solid #ddd;
+    font-size: 14px;
+    color: #666;
+}
+.contador {
+    font-weight: bold;
+    color: #007bff;
+    font-size: 16px;
+}
+.copyright {
+    margin-top: 8px;
+    font-size: 12px;
+}
+
+/* 🔄 Loader */
+.loader {
+    text-align: center;
+    padding: 50px;
+    font-size: 18px;
+    color: #007bff;
+}
 </style>
 </head>
 
@@ -149,7 +207,9 @@ h1 {
 <div class="layout">
 
     <!-- 📚 IZQUIERDA -->
-    <div class="contenedor" id="lista"></div>
+    <div class="contenedor" id="lista">
+        <div class="loader">Cargando datos...</div>
+    </div>
 
     <!-- 🆕 DERECHA -->
     <div class="sidebar">
@@ -159,6 +219,12 @@ h1 {
         </div>
     </div>
 
+</div>
+
+<!-- 📊 Contador y Copyright -->
+<div class="footer-info">
+    <div class="contador" id="contadorResultados">Total de resultados: 0</div>
+    <div class="copyright">© 2026 Buscador Bibliográfico - Todos los derechos reservados</div>
 </div>
 
 <!-- 🚨 SOLO AGREGADO -->
@@ -188,64 +254,8 @@ h1 {
 
 <script>
 
-const datos = [
-    {tipo: "libro", titulo: "Historia de Chiapas", autor: "Juan Pérez", imagen: "https://historico.conaliteg.gob.mx/c/H1993P3HI161/000.jpg", descripcion: "Esto sera una descripcion del articulo o libro o revista o folleto Un recorrido histórico por el estado de Chiapas."},
-    {tipo: "revista", titulo: "Cultura y Sociedad", autor: "María López", imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEndY1fBwami2CuFtKcRZyz8T1uTxDVD7K3w&s"},
-    {tipo: "articulo", titulo: "Turismo en San Cristóbal", autor: "Carlos Ruiz", imagen: "https://0.academia-photos.com/attachment_thumbnails/125750250/mini_magick20251216-1-tdzecp.png?1765847358", descripcion: "Análisis del turismo en San Cristóbal de las Casas."},
-    {tipo: "folleto", titulo: "Guía turística Chiapas", autor: "Gobierno de México", imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTz-Bv4kZczLDUd4spB7zvu2EdkO2AZuSEbcw&s"},
-    {tipo: "libro", titulo: "Ecosistemas de Chiapas", autor: "Ana Gómez", imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTVoGY2XRDYkCFBEwh-1e5bPYmUwwDMZG8Qw&s", descripcion: "Descripción de los ecosistemas presentes en Chiapas."},
-    {tipo: "articulo", titulo: "Economía regional", autor: "Luis Hernández", imagen: "https://www.comecso.com/wp-content/uploads/2024/05/portada-133-810x1121.jpg"},
-    {tipo: "libro", titulo: "Biodiversidad en Chiapas", autor: "Laura Méndez", imagen: "https://i1.rgstatic.net/publication/264544109_La_Biodiversidad_en_Chiapas_Estudio_de_Estado_Volumen_1/links/53e3e2610cf2fb74870e23e9/largepreview.png", descripcion: "Estudio sobre la biodiversidad del estado."},
-    {tipo: "revista", titulo: "Investigación Ambiental", autor: "UNAM", imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWJaWlTSv4lPXtsZFb00OMiCewZ2w_IeBjfw&s"},
-    {tipo: "articulo", titulo: "Cambio climático en México", autor: "Pedro Torres", imagen: "https://i1.rgstatic.net/publication/337972712_El_cambio_climatico/links/5df891ba299bf10bc361366f/largepreview.png"},
-    {tipo: "libro", titulo: "Zoología de México", autor: "Dr. Rivera", imagen: "https://m.media-amazon.com/images/I/51A4SVe1jXL._AC_UF1000,1000_QL80_.jpg"}
-];
-
-const lista = document.getElementById("lista");
-const buscador = document.getElementById("buscador");
-const abecedarioDiv = document.getElementById("abecedario");
-const nuevosLista = document.getElementById("nuevosLista");
-
+let datos = [];
 let letraSeleccionada = "TODOS";
-
-// 🔤 Abecedario
-"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").forEach(letra => {
-    const span = document.createElement("span");
-    span.textContent = letra;
-    span.classList.add("letra");
-    span.onclick = () => {
-        letraSeleccionada = letra;
-        actualizarActiva(span);
-        mostrarDatos(buscador.value);
-    };
-    abecedarioDiv.appendChild(span);
-});
-
-// TODOS
-const todosBtn = document.createElement("span");
-todosBtn.textContent = "TODOS";
-todosBtn.classList.add("letra", "activa");
-todosBtn.onclick = () => {
-    letraSeleccionada = "TODOS";
-    actualizarActiva(todosBtn);
-    mostrarDatos(buscador.value);
-};
-abecedarioDiv.appendChild(todosBtn);
-
-function actualizarActiva(el) {
-    document.querySelectorAll(".letra").forEach(l => l.classList.remove("activa"));
-    el.classList.add("activa");
-}
-
-// 🚨 SOLO AGREGADO
-setTimeout(() => document.getElementById("alerta1").style.display = "block", 500);
-setTimeout(() => document.getElementById("alerta2").style.display = "block", 1000);
-setTimeout(() => document.getElementById("alerta3").style.display = "block", 1500);
-setTimeout(() => document.getElementById("alerta4").style.display = "block", 2000);
-
-function cerrarAlerta(id) {
-    document.getElementById(id).style.display = "none";
-}
 
 // 🔤 Normalizar
 function normalizar(t) {
@@ -262,9 +272,22 @@ function ordenarDatos(arr) {
     );
 }
 
+// Función para recortar descripción
+function recortarDescripcion(texto, limite = 150) {
+    if (!texto) return "";
+    if (texto.length <= limite) return texto;
+    return texto.substring(0, limite) + "...";
+}
+
 // 📚 Mostrar lista principal
 function mostrarDatos(filtro="") {
-    lista.innerHTML = "";
+    const listaDiv = document.getElementById("lista");
+    if (!datos.length) {
+        listaDiv.innerHTML = '<div class="loader">No hay datos disponibles</div>';
+        return;
+    }
+    
+    listaDiv.innerHTML = "";
     const f = normalizar(filtro);
 
     let resultado = datos.filter(item => {
@@ -280,29 +303,60 @@ function mostrarDatos(filtro="") {
 
     resultado = ordenarDatos(resultado);
 
+    // Actualizar contador
+    const contadorElement = document.getElementById("contadorResultados");
+    contadorElement.textContent = `Total de resultados: ${resultado.length}`;
+
     const limite = (letraSeleccionada === "TODOS") ? 10 : 6;
 
-    resultado.slice(0, limite).forEach(item => {
+    resultado.slice(0, limite).forEach((item, index) => {
         const div = document.createElement("div");
         div.classList.add("item");
+        
+        const descripcionCorta = item.descripcion ? recortarDescripcion(item.descripcion, 150) : "";
+        const descripcionCompleta = item.descripcion || "";
+        const tieneDescripcionLarga = item.descripcion && item.descripcion.length > 150;
+        const idUnico = `desc-${Date.now()}-${index}`;
 
         div.innerHTML = `
-            <img src="${item.imagen}">
+            <img src="${item.imagen}" onerror="this.src='https://via.placeholder.com/100x120?text=Sin+imagen'">
             <div class="contenido">
                 <span class="tipo ${item.tipo}">${item.tipo}</span>
                 <h3>${item.titulo}</h3>
                 <p>${item.autor}</p>
-                ${item.descripcion ? `<p>${item.descripcion}</p>` : ""}
+                ${item.descripcion ? `
+                    <div class="descripcion" id="${idUnico}">${descripcionCorta}</div>
+                    ${tieneDescripcionLarga ? `<button class="ver-mas" onclick="toggleDescripcion('${idUnico}', '${descripcionCompleta.replace(/'/g, "\\'").replace(/[\n\r]/g, ' ')}', '${descripcionCorta.replace(/'/g, "\\'")}')">Ver más</button>` : ""}
+                ` : ""}
             </div>
         `;
 
-        lista.appendChild(div);
+        listaDiv.appendChild(div);
     });
+}
+
+// Función para expandir/contraer descripción
+function toggleDescripcion(id, textoCompleto, textoCorto) {
+    const descElement = document.getElementById(id);
+    const boton = descElement.nextElementSibling;
+    
+    if (descElement.classList.contains("expandida")) {
+        descElement.textContent = textoCorto;
+        descElement.classList.remove("expandida");
+        boton.textContent = "Ver más";
+    } else {
+        descElement.textContent = textoCompleto;
+        descElement.classList.add("expandida");
+        boton.textContent = "Ver menos";
+    }
 }
 
 // 🆕 Mostrar nuevos
 function mostrarNuevos() {
-    nuevosLista.innerHTML = "";
+    const nuevosListaDiv = document.getElementById("nuevosLista");
+    if (!datos.length) return;
+    
+    nuevosListaDiv.innerHTML = "";
 
     const nuevos = [...datos].reverse().slice(0, 10);
 
@@ -314,16 +368,82 @@ function mostrarNuevos() {
             <span class="numero">${index + 1}.</span> ${item.titulo}
         `;
 
-        nuevosLista.appendChild(div);
+        nuevosListaDiv.appendChild(div);
     });
 }
 
-// eventos
-buscador.onkeyup = e => mostrarDatos(e.target.value);
+// Cargar datos desde datos.json (usando ruta relativa)
+async function cargarDatos() {
+    try {
+        // Usamos ruta relativa - el archivo datos.json debe estar en la misma carpeta que el HTML
+        const response = await fetch('./datos.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        datos = await response.json();
+        
+        // Inicializar la interfaz después de cargar los datos
+        inicializarInterfaz();
+        mostrarDatos();
+        mostrarNuevos();
+        
+        // Mostrar alertas después de cargar los datos
+        setTimeout(() => document.getElementById("alerta1").style.display = "block", 500);
+        setTimeout(() => document.getElementById("alerta2").style.display = "block", 1000);
+        setTimeout(() => document.getElementById("alerta3").style.display = "block", 1500);
+        setTimeout(() => document.getElementById("alerta4").style.display = "block", 2000);
+        
+    } catch (error) {
+        console.error('Error cargando datos:', error);
+        document.getElementById("lista").innerHTML = '<div class="loader">Error al cargar los datos. Verifica que el archivo datos.json esté en la misma carpeta que este archivo HTML.</div>';
+        document.getElementById("contadorResultados").textContent = 'Error: No se pudieron cargar los datos';
+    }
+}
 
-// inicial
-mostrarDatos();
-mostrarNuevos();
+// Inicializar abecedario
+function inicializarInterfaz() {
+    const abecedarioDiv = document.getElementById("abecedario");
+    abecedarioDiv.innerHTML = "";
+    
+    // 🔤 Abecedario
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").forEach(letra => {
+        const span = document.createElement("span");
+        span.textContent = letra;
+        span.classList.add("letra");
+        span.onclick = () => {
+            letraSeleccionada = letra;
+            actualizarActiva(span);
+            mostrarDatos(document.getElementById("buscador").value);
+        };
+        abecedarioDiv.appendChild(span);
+    });
+
+    // TODOS
+    const todosBtn = document.createElement("span");
+    todosBtn.textContent = "TODOS";
+    todosBtn.classList.add("letra", "activa");
+    todosBtn.onclick = () => {
+        letraSeleccionada = "TODOS";
+        actualizarActiva(todosBtn);
+        mostrarDatos(document.getElementById("buscador").value);
+    };
+    abecedarioDiv.appendChild(todosBtn);
+}
+
+function actualizarActiva(el) {
+    document.querySelectorAll(".letra").forEach(l => l.classList.remove("activa"));
+    el.classList.add("activa");
+}
+
+function cerrarAlerta(id) {
+    document.getElementById(id).style.display = "none";
+}
+
+// Eventos
+document.getElementById("buscador").onkeyup = e => mostrarDatos(e.target.value);
+
+// Iniciar la aplicación
+cargarDatos();
 
 </script>
 
