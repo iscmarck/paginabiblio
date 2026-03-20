@@ -108,6 +108,32 @@ h1 {
     font-weight: bold;
     color: #007bff;
 }
+
+/* 🚨 SOLO AGREGADO */
+.alerta {
+    position: fixed;
+    left: 20px;
+    width: 250px;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    display: none;
+    z-index: 1000;
+}
+.alerta1 { top: 20%; background: #007bff; }
+.alerta2 { top: 40%; background: #28a745; }
+.alerta3 { top: 60%; background: #dc3545; }
+
+.cerrar {
+    background: white;
+    color: #000;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    float: right;
+}
 </style>
 </head>
 
@@ -134,10 +160,29 @@ h1 {
 
 </div>
 
+<!-- 🚨 SOLO AGREGADO -->
+<div class="alerta alerta1" id="alerta1">
+    <button class="cerrar" onclick="cerrarAlerta('alerta1')">X</button>
+    <h4>📢 Aviso 1</h4>
+    <p>Nuevo material disponible.</p>
+</div>
+
+<div class="alerta alerta2" id="alerta2">
+    <button class="cerrar" onclick="cerrarAlerta('alerta2')">X</button>
+    <h4>📚 Aviso 2</h4>
+    <p>Revisa nuestras revistas digitales.</p>
+</div>
+
+<div class="alerta alerta3" id="alerta3">
+    <button class="cerrar" onclick="cerrarAlerta('alerta3')">X</button>
+    <h4>⚠️ Aviso 3</h4>
+    <p>Mantenimiento este fin de semana.</p>
+</div>
+
 <script>
 
 const datos = [
-    {tipo: "libro", titulo: "Historia de Chiapas", autor: "Juan Pérez", imagen: "https://historico.conaliteg.gob.mx/c/H1993P3HI161/000.jpg", descripcion: "Un recorrido histórico por el estado de Chiapas."},
+    {tipo: "libro", titulo: "Historia de Chiapas", autor: "Juan Pérez", imagen: "https://historico.conaliteg.gob.mx/c/H1993P3HI161/000.jpg", descripcion: "Esto sera una descripcion del articulo o libro o revista o folleto Un recorrido histórico por el estado de Chiapas."},
     {tipo: "revista", titulo: "Cultura y Sociedad", autor: "María López", imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEndY1fBwami2CuFtKcRZyz8T1uTxDVD7K3w&s"},
     {tipo: "articulo", titulo: "Turismo en San Cristóbal", autor: "Carlos Ruiz", imagen: "https://0.academia-photos.com/attachment_thumbnails/125750250/mini_magick20251216-1-tdzecp.png?1765847358", descripcion: "Análisis del turismo en San Cristóbal de las Casas."},
     {tipo: "folleto", titulo: "Guía turística Chiapas", autor: "Gobierno de México", imagen: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTz-Bv4kZczLDUd4spB7zvu2EdkO2AZuSEbcw&s"},
@@ -183,6 +228,15 @@ abecedarioDiv.appendChild(todosBtn);
 function actualizarActiva(el) {
     document.querySelectorAll(".letra").forEach(l => l.classList.remove("activa"));
     el.classList.add("activa");
+}
+
+// 🚨 SOLO AGREGADO
+setTimeout(() => document.getElementById("alerta1").style.display = "block", 500);
+setTimeout(() => document.getElementById("alerta2").style.display = "block", 1000);
+setTimeout(() => document.getElementById("alerta3").style.display = "block", 1500);
+
+function cerrarAlerta(id) {
+    document.getElementById(id).style.display = "none";
 }
 
 // 🔤 Normalizar
