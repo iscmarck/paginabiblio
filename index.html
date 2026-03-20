@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Buscador Bibliográfico</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+#buscador {
+    width: 100%;
+    max-width: 500px;
+    margin: 20px auto;
+    display: block;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+/* 🔥 Layout */
+.layout {
+    display: flex;
+    gap: 20px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+/* 🔤 Abecedario */
+.abecedario {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.letra {
+    display: inline-block;
+    margin: 3px;
+    padding: 6px 10px;
+    background: #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.activa {
+    background: #007bff;
+    color: white;
+}
+
+/* 📚 Lista principal */
+.contenedor {
+    flex: 3;
+}
+
+.item {
+    display: flex;
+    gap: 15px;
+    background: white;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    align-items: center;
+}
+
+.item img {
+    width: 100px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.contenido {
+    flex: 1;
+}
+
+.tipo {
+    font-size: 12px;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 5px;
+}
+
+.libro { background: #007bff; }
+.revista { background: #28a745; }
+.articulo { background: #ffc107; color: black; }
+.folleto { background: #dc3545; }
+
+/* 🆕 Sidebar */
+.sidebar {
+    flex: 1;
+}
+
+.nuevos {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    border: 2px solid #007bff;
+}
+
+.nuevos h3 {
+    margin-top: 0;
+    text-align: center;
+}
+
+.nuevo-item {
+    font-size: 14px;
+    margin: 8px 0;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+.numero {
+    font-weight: bold;
+    color: #007bff;
+}
+
+</style>
+</head>
+<body>
+
+<h1>Buscador Bibliográfico</h1>
+
+<input type="text" id="buscador" placeholder="Buscar...">
+
+<div class="abecedario" id="abecedario"></div>
+
+<div class="layout">
+
+    <!-- 📚 IZQUIERDA -->
+    <div class="contenedor" id="lista"></div>
+
+    <!-- 🆕 DERECHA -->
+    <div class="sidebar">
+        <div class="nuevos">
+            <h3>Nuevos títulos</h3>
+            <div id="nuevosLista"></div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+const datos = [
+    {tipo: "libro", titulo: "Historia de Chiapas", autor: "Juan Pérez", imagen: "imagenes/libro1.jpg"},
+    {tipo: "revista", titulo: "Cultura y Sociedad", autor: "María López", imagen: "imagenes/revista1.jpg"},
+    {tipo: "articulo", titulo: "Turismo en San Cristóbal", autor: "Carlos Ruiz", imagen: "imagenes/articulo1.jpg"},
+    {tipo: "folleto", titulo: "Guía turística Chiapas", autor: "Gobierno de México", imagen: "imagenes/folleto1.jpg"},
+    {tipo: "libro", titulo: "Ecosistemas de Chiapas", autor: "Ana Gómez", imagen: "imagenes/libro2.jpg"},
+    {tipo: "articulo", titulo: "Economía regional", autor: "Luis Hernández", imagen: "imagenes/articulo2.jpg"},
+    {tipo: "libro", titulo: "Biodiversidad en Chiapas", autor: "Laura Méndez", imagen: "imagenes/libro3.jpg"},
+    {tipo: "revista", titulo: "Investigación Ambiental", autor: "UNAM", imagen: "imagenes/revista2.jpg"},
+    {tipo: "articulo", titulo: "Cambio climático en México", autor: "Pedro Torres", imagen: "imagenes/articulo3.jpg"},
+    {tipo: "libro", titulo: "Zoología de México", autor: "Dr. Rivera", imagen: "imagenes/libro4.jpg"}
+];
+
+const lista = document.getElementById("lista");
+const buscador = document.getElementById("buscador");
+const abecedarioDiv = document.getElementById("abecedario");
+const nuevosLista = document.getElementById("nuevosLista");
+
+let letraSeleccionada = "TODOS";
+
+// 🔤 Abecedario
+"ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").forEach(letra => {
+    const span = document.createElement("span");
+    span.textContent = letra;
+    span.classList.add("letra");
+
+    span.onclick = () => {
+        letraSeleccionada = letra;
+        actualizarActiva(span);
+        mostrarDatos(buscador.value);
+    };
+
+    abecedarioDiv.appendChild(span);
+});
+
+// TODOS
+const todosBtn = document.createElement("span");
+todosBtn.textContent = "TODOS";
+todosBtn.classList.add("letra", "activa");
+
+todosBtn.onclick = () => {
+    letraSeleccionada = "TODOS";
+    actualizarActiva(todosBtn);
+    mostrarDatos(buscador.value);
+};
+
+abecedarioDiv.appendChild(todosBtn);
+
+function actualizarActiva(el) {
+    document.querySelectorAll(".letra").forEach(l => l.classList.remove("activa"));
+    el.classList.add("activa");
+}
+
+// 🔤 Normalizar
+function normalizar(t) {
+    return t.toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[.,]/g, "");
+}
+
+// 🔤 Ordenar
+function ordenarDatos(arr) {
+    return arr.sort((a, b) =>
+        normalizar(a.titulo).localeCompare(normalizar(b.titulo))
+    );
+}
+
+// 📚 Mostrar lista principal
+function mostrarDatos(filtro="") {
+    lista.innerHTML = "";
+    const f = normalizar(filtro);
+
+    let resultado = datos.filter(item => {
+        const coincide =
+            normalizar(item.titulo).includes(f) ||
+            normalizar(item.autor).includes(f) ||
+            normalizar(item.tipo).includes(f);
+
+        const coincideLetra =
+            letraSeleccionada === "TODOS" ||
+            normalizar(item.titulo).startsWith(normalizar(letraSeleccionada));
+
+        return coincide && coincideLetra;
+    });
+
+    resultado = ordenarDatos(resultado);
+
+    const limite = (letraSeleccionada === "TODOS") ? 10 : 6;
+    resultado.slice(0, limite).forEach(item => {
+        const div = document.createElement("div");
+        div.classList.add("item");
+
+        div.innerHTML = `
+            <img src="${item.imagen}">
+            <div class="contenido">
+                <span class="tipo ${item.tipo}">${item.tipo}</span>
+                <h3>${item.titulo}</h3>
+                <p>${item.autor}</p>
+            </div>
+        `;
+        lista.appendChild(div);
+    });
+}
+
+// 🆕 Mostrar nuevos (últimos 10)
+function mostrarNuevos() {
+    nuevosLista.innerHTML = "";
+
+    const nuevos = [...datos].reverse().slice(0, 10);
+
+    nuevos.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.classList.add("nuevo-item");
+
+        div.innerHTML = `
+            <span class="numero">${index + 1}.</span>
+            ${item.titulo}
+        `;
+
+        nuevosLista.appendChild(div);
+    });
+}
+
+// eventos
+buscador.onkeyup = e => mostrarDatos(e.target.value);
+
+// inicial
+mostrarDatos();
+mostrarNuevos();
+</script>
+
+</body>
+</html>
