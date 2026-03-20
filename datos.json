@@ -1,0 +1,86 @@
+[
+    {
+        "tipo": "libro",
+        "titulo": "La arquitectura de San Cristobal de las casas, Chiapas",
+        "autor": "Juan Benito Artigas Hernández",
+        "imagen": "https://libros.cimsur.unam.mx/public/presses/1/submission_165_166_coverImage_es_ES_t.jpg",
+        "descripcion": "Este libro tiene origen en un estudio que publicó la Secretaría de Educación y Cultura del Estado de Chiapas, en coordinación con el Patronato Fray Bartolomé de Las Casas, en el mes de abril de 1984. En aquella ocasión se conjuntó la obra de diez autores para conformar una monografía general, tal vez la más amplia que haya podido reunirse de la localidad, llevó por título San Cristóbal y sus Alrededores, y la sección de arquitectura, el de San Cristóbal de Las Casas y sus Alrededores, Esbozo de su Arquitectura. Aquella obra tuvo un tiraje reducido, por lo que se agotó sin haberse difundido fuera de la región. Ante la posibilidad de establecer una colaboración para reeditar la sección de arquitectura, entre la Coordinación de Humanidades, de la Facultad de Arquitectura y el Centro de Investigaciones Humanísticas de Mesoamérica y del Estado de Chiapas, de la UNAM, junto con el Gobierno del Estado de Chiapas, me avoqué a revisar la edición original, a enriquecer las ilustraciones y a aumentar el número de plantas arquitectónicas de la localidad. Asimismo, incluí cuatro monografías de edificios con su respectiva documentación gráfica y los estudios de medio natural, uso del suelo y tres mapas, contenidos originalmente en el Esquema de Desarrollo Urbano de la Ciudad de San Cristóbal de Las Casas que realicé para la Secretaría de Desarrollo Urbano y Ecología en 1987."
+    },
+    {
+        "tipo": "libro",
+        "titulo": "Historia de Chiapas",
+        "autor": "Juan Pérez",
+        "imagen": "https://historico.conaliteg.gob.mx/c/H1993P3HI161/000.jpg",
+        "descripcion": "Esto sera una descripcion del articulo o libro o revista o folleto Un recorrido histórico por el estado de Chiapas."
+    },
+    {
+        "tipo": "revista",
+        "titulo": "Cultura y Sociedad",
+        "autor": "María López",
+        "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEndY1fBwami2CuFtKcRZyz8T1uTxDVD7K3w&s",
+        "descripcion": ""
+    },
+    {
+        "tipo": "articulo",
+        "titulo": "Turismo en San Cristóbal",
+        "autor": "Carlos Ruiz",
+        "imagen": "https://0.academia-photos.com/attachment_thumbnails/125750250/mini_magick20251216-1-tdzecp.png?1765847358",
+        "descripcion": "Análisis del turismo en San Cristóbal de las Casas."
+    },
+    {
+        "tipo": "folleto",
+        "titulo": "Guía turística Chiapas",
+        "autor": "Gobierno de México",
+        "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTz-Bv4kZczLDUd4spB7zvu2EdkO2AZuSEbcw&s",
+        "descripcion": ""
+    },
+    {
+        "tipo": "libro",
+        "titulo": "Ecosistemas de Chiapas",
+        "autor": "Ana Gómez",
+        "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTVoGY2XRDYkCFBEwh-1e5bPYmUwwDMZG8Qw&s",
+        "descripcion": "Descripción de los ecosistemas presentes en Chiapas."
+    },
+    {
+        "tipo": "articulo",
+        "titulo": "Economía regional",
+        "autor": "Luis Hernández",
+        "imagen": "https://www.comecso.com/wp-content/uploads/2024/05/portada-133-810x1121.jpg",
+        "descripcion": ""
+    },
+    {
+        "tipo": "libro",
+        "titulo": "Biodiversidad en Chiapas",
+        "autor": "Laura Méndez",
+        "imagen": "https://i1.rgstatic.net/publication/264544109_La_Biodiversidad_en_Chiapas_Estudio_de_Estado_Volumen_1/links/53e3e2610cf2fb74870e23e9/largepreview.png",
+        "descripcion": "Estudio sobre la biodiversidad del estado."
+    },
+    {
+        "tipo": "revista",
+        "titulo": "Investigación Ambiental",
+        "autor": "UNAM",
+        "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWJaWlTSv4lPXtsZFb00OMiCewZ2w_IeBjfw&s",
+        "descripcion": ""
+    },
+    {
+        "tipo": "articulo",
+        "titulo": "Cambio climático en México",
+        "autor": "Pedro Torres",
+        "imagen": "https://i1.rgstatic.net/publication/337972712_El_cambio_climatico/links/5df891ba299bf10bc361366f/largepreview.png",
+        "descripcion": ""
+    },
+    {
+        "tipo": "libro",
+        "titulo": "Zoología de México",
+        "autor": "Dr. Rivera",
+        "imagen": "https://m.media-amazon.com/images/I/51A4SVe1jXL._AC_UF1000,1000_QL80_.jpg",
+        "descripcion": ""
+    },
+     {
+        "tipo": "libro",
+        "titulo": "San Cristobal de las Casas, chiapas. México",
+        "autor": "Dr. Rivera",
+        "imagen": "https://m.media-amazon.com/images/I/51A4SVe1jXL._AC_UF1000,1000_QL80_.jpg",
+        "descripcion": ""
+    }
+]
